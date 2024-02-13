@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\Reachbox.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\abc\\Documents\\GitHub\\CSharp\\Razor Applications\\Reachbox\\wwwroot\\css\\Index.css",
+      "PackagePath": "staticwebassets\\css\\Index.css"
+    },
+    {
       "Id": "C:\\Users\\abc\\Documents\\GitHub\\CSharp\\Razor Applications\\Reachbox\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
