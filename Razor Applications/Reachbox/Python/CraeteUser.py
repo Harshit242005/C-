@@ -21,6 +21,7 @@ class Create_User:
         user_data = {
             "Name": name,
             "TechList": tech_list,
+            "Total_post_created": 0,
             "Connects": [],
             "Posts": []
         }
