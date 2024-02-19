@@ -5,5 +5,13 @@
 }
 
 <div>
-    <p>Signup</p>
+    <form method="post">
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="Email" asp-for="Email" required>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" asp-for="Password" required>
+
+    <button type="submit">Signup</button>
+</form>
 </div>
