@@ -9,6 +9,7 @@ from mongo_connection import get_mongo_connection
 
 class GetPosts:
     def __init__(self, gmail):
+        self.current_user = gmail
         # user gamil who is trying to get the post
         self.connect_users = self.get_user_connect(gmail)
         self.posts = self.get_posts(self.connect_users)
@@ -16,9 +17,10 @@ class GetPosts:
         self.not_viewed_by_me = self.get_not_viewed(self.posts, gmail)
         self.liked_by_my_connects = self.liked_by_connects(self.all_posts, self.connect_users)
         self.repost_by_my_connects = self.repost_by_connects(self.all_posts, self.connect_users)
-        self.return_all_post(self.not_viewed_by_me, 
+        self.all_unique_ids = self.return_all_post(self.not_viewed_by_me, 
                              self.liked_by_my_connects,
                              self.repost_by_my_connects)
+        
 
 
     def get_user_connect(self, gmail):
@@ -46,28 +48,52 @@ class GetPosts:
         return all_posts
     
     def get_not_viewed(self, posts, gmail):
-        # get all the post which are not viewed by me 
+        # get all the post ids which are not viewed by me 
         all_posts_not_viewed_by_me = []
         for post in posts:
             if gmail not in post["viewed_by"]:
-                all_posts_not_viewed_by_me.append(post)
+
+                all_posts_not_viewed_by_me.append(post["PostId"])
         print(f'posts not viewed by me: {all_posts_not_viewed_by_me}')
         return all_posts_not_viewed_by_me
     
     # get post liked by my connects
     def get_like_by_connects(self, all_posts, connects):
-        
-        return
+        # two for loop based loop up to get the posts
+        # after getting the each connects post they would be 
+        # sent to check if they are not viewed by me or what
+        all_ids = []
+        for user in connects:
+            connect_liked_post = []
+            for post in all_posts:
+                if user in post["Liked_by"]:
+                    connect_liked_post += post
+            unique_post_liked_ids = self.get_not_viewed(connect_liked_post, self.current_user)
+            all_ids += unique_post_liked_ids
+        return all_ids
     
     # get all post retweet by my connects
     def get_repost_by_connects(self, all_posts, connects):
-        return 
+        all_ids = []
+        for user in connects:
+            connect_liked_post = []
+            for post in all_posts:
+                if user in post["Reposted_by"]:
+                    connect_liked_post += post
+            unique_post_liked_ids = self.get_not_viewed(connect_liked_post, self.current_user)
+            all_ids += unique_post_liked_ids
+        return all_ids
+        
     
 
     def return_all_post(self, not_viewed_post, connects_liked_post, connects_repost_post):
-        all_post = []
+        all_post_ids = []
         all_post += not_viewed_post
         all_post += connects_liked_post
         all_post += connects_repost_post
 
-        return all_post
+        return list(set(all_post_ids))
+    
+    def posts(self):
+        posts_id = self.all_unique_ids
+        return posts_id

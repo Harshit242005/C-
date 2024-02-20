@@ -1,0 +1,23 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>create post</p>
+    <form action="/CreatePost" method="post">
+        <input type="gmail" placeholder="Type gmail" name="Gmail">
+        <input type="text" placeholder="Type heading" name="Heading">
+        <textarea name="Description" placeholder="Type description"></textarea>
+        <select name="SelectTech" multiple>
+            <option value="Python">Python</option>
+            <option value="ReactJS">ReactJS</option>
+            <option value="Flutter">Flutter</option>
+            <option value="VueJS">VueJS</option>
+            <option value="NodeJS">NodeJS</option>
+        </select>
+        <button type="submit">create post</button>
+    </form>
+</body>
+</html>

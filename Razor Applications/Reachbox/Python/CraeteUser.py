@@ -1,20 +1,21 @@
 from pymongo import MongoClient
 
-client = MongoClient('mongodb+srv://agreharshit610:i4ZnXRbFARI4kaSl@taskhandler.u5cgjfw.mongodb.net/')
+client = MongoClient('mongodb://localhost:27017/')
 # Access a specific database, replace 'your_database_name' with your database name
 db = client.CodeUp
 collection = db.Users
 
 class Create_User:
     def __init__(self, gmail, name, tech_list):
+        self.user_created = None  # Initialize the instance variable
         # check if the gmail exists in the database or not
-        find_document = collection.find({"Gmail": gmail})
-        if find_document.count() > 0:
-            return "User with this gmail already exists"
+        find_document = collection.count_documents({"Gmail": gmail})
+        if find_document > 0:
+            self.user_created = False
         else:
             collection.insert_one({"Gmail": gmail})
             self.add_details(gmail, name, tech_list)
-            return "User is created!"
+            self.user_created = True
 
     def add_details(self, gmail, name, tech_list):
        
